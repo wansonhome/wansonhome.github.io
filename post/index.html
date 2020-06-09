@@ -1,32 +1,44 @@
 <!doctype html>
-<html lang="en-us">
+<html lang="zh-CN">
 <head>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Posts | My New Hugo Site</title>
-    <meta property="og:title" content="Posts - My New Hugo Site">
+    <title>Posts | wansonhome</title>
+    <meta property="og:title" content="Posts - wansonhome">
     <meta property="og:type" content="article">
         
         
-    <meta name="Keywords" content="">
+    <meta name="Keywords" content="养兔兔，机器学习，python">
     <meta name="description" content="Posts">
         
-    <meta name="author" content="">
+    <meta name="author" content="W_shenhong">
     <meta property="og:url" content="https://wansonhome.github.io/post/">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 
     <link rel="stylesheet" href='/css/normalize.css'>
     <link rel="stylesheet" href='/css/style.css'>
-    <link rel="alternate" type="application/rss+xml+xml" href="https://wansonhome.github.io/post/index.xml" title="My New Hugo Site" />
+    <link rel="alternate" type="application/rss+xml+xml" href="https://wansonhome.github.io/post/index.xml" title="wansonhome" />
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-4031353640611810",
+        enable_page_level_ads: true
+    });
+    </script>
+    
 
 
     
+    
+        <link rel="stylesheet" href='/css/douban.css'>
+    
+        <link rel="stylesheet" href='/css/other.css'>
     
 </head>
 
@@ -38,14 +50,20 @@
             <div class="site-name ">
                 
                     <a id="logo" href="https://wansonhome.github.io/">
-                        My New Hugo Site
+                        wansonhome
                     </a>
                 
-                
+                <p class="description">兔兔的居居</p>
             </div>
             <div>
                 <nav id="nav-menu" class="clearfix">
                     <a class="current" href="https://wansonhome.github.io/">首页</a>
+                    
+                    <a  href="https://wansonhome.github.io/tools/" title="工具">工具</a>
+                    
+                    <a  href="https://wansonhome.github.io/archives/" title="归档">归档</a>
+                    
+                    <a  href="https://wansonhome.github.io/about/" title="关于">关于</a>
                     
                 </nav>
             </div>
@@ -65,7 +83,7 @@
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://wansonhome.github.io/post/knn%E7%AE%97%E6%B3%95/" title="Knn的iris和seeds数据集分类">Knn的iris和seeds数据集分类</a>
+                <a href="https://wansonhome.github.io/post/Knn%E7%AE%97%E6%B3%95/" title="Knn的iris和seeds数据集分类">Knn的iris和seeds数据集分类</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -80,16 +98,9 @@
         </div>
         
         <div class="post-content">
-            knn knn概述 Knn(k-NearestNeighbor)是一个分类算法，在机器学习中属于相对基础的方法之一。实现的核心思想，用人话来解释：
- 物以类聚，样本周围谁最多，它就是谁
- 具体解释为，在一个样本空间中的前k的距离最近的邻居，通常属于同一个类别，并具有这个类别上的特性。核心是根据其周围样本来进行分类判断，适合于类域交叉重叠较多的样本。
-流程  预处理数据 划分测试样本和训练样本，比如三七分 维护一个大小为k的距离优先级队列，取测试样本计算它与训练样本的欧式距离或曼哈顿距离。 得出排名前k的点 投票确定分类  优缺点 简单好理解，适合于类域交叉重叠较多的样本。
-计算量大，投票过程慢
-数据集    数据集名称 样本数量 属性数量(维度)     Iris 150 4   Seeds 210 7    Iris 数据集介绍 Iris数据集是常用的分类实验数据集，由Fisher, 1936收集整理。Iris也称鸢尾花卉数据集，是一类多重变量分析的数据集。数据集包含150个数据样本，分为3类，每类50个数据，每个数据包含4个属性。可通过花萼长度，花萼宽度，花瓣长度，花瓣宽度4个属性预测鸢尾花卉属于（Setosa，Versicolour，Virginica）三个种类中的哪一类。
-Seeds 数据集介绍 共210个观察值，7个输入变量，一个输出变量 区域，周长，压实度，籽粒长度，籽粒宽度，不对称系数，籽粒腹沟长度
-实现部分 Iris数据预处理 from sklearn.datasets import load_iris #从sklearn导入iris数据 iris=load_iris()#加载iris信息 data=iris.data#iris的数据集 target=iris.target#iris的种类 #数据部分 [[5.1 3.5 1.4 0.2] [4.9 3. 1.4 0.2] [4.7 3.2 1.3 0.……
+            knn knn概述 Knn(k-NearestNeighbor)是一个分类算法，在机器学习中属于相对基础的方法之一。实现的核心思想，用人话来解释： 物以类聚，样本周围谁最多，它就是谁 具体解释为，在一个样本空间中的前k的距离最近的邻居，通常属于同一个类别，并具有这个类别上的特性。核心是根据其……
         </div>
-        <p class="readmore"><a href="https://wansonhome.github.io/post/knn%E7%AE%97%E6%B3%95/">阅读全文</a></p>
+        <p class="readmore"><a href="https://wansonhome.github.io/post/Knn%E7%AE%97%E6%B3%95/">阅读全文</a></p>
     </article>
     
     
@@ -105,7 +116,7 @@ Seeds 数据集介绍 共210个观察值，7个输入变量，一个输出变量
 
                 <div id="secondary">
     <section class="widget">
-        <form id="search" action='//www.google.com/search' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+        <form id="search" action='https://wansonhome.github.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
       
       <input type="text" name="q" maxlength="20" placeholder="Search">
       <input type="hidden" name="sitesearch" value="https://wansonhome.github.io/">
@@ -118,7 +129,7 @@ Seeds 数据集介绍 共210个观察值，7个输入变量，一个输出变量
 <ul class="widget-list">
     
     <li>
-        <a href="https://wansonhome.github.io/post/knn%E7%AE%97%E6%B3%95/" title="Knn的iris和seeds数据集分类">Knn的iris和seeds数据集分类</a>
+        <a href="https://wansonhome.github.io/post/Knn%E7%AE%97%E6%B3%95/" title="Knn的iris和seeds数据集分类">Knn的iris和seeds数据集分类</a>
     </li>
     
 </ul>
@@ -158,7 +169,7 @@ Seeds 数据集介绍 共210个观察值，7个输入变量，一个输出变量
     </div>
     <footer id="footer">
     <div class="container">
-        &copy; 2020 <a href="https://wansonhome.github.io/">My New Hugo Site By </a>.
+        &copy; 2020 <a href="https://wansonhome.github.io/">wansonhome By W_shenhong</a>.
         Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
         <a href="https://www.flysnow.org/" target="_blank">Theme</a> based on <a href="https://github.com/flysnow-org/maupassant-hugo" target="_blank">maupassant</a>.
         
@@ -172,8 +183,12 @@ Seeds 数据集介绍 共210个观察值，7个输入变量，一个输出变量
 
 
 
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
 
 
+
+
+    <script src='/js/douban.js'></script>
 
 </body>
 
