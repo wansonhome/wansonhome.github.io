@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Knn的iris和seeds数据集分类 | My New Hugo Site</title>
+    <meta property="og:title" content="Knn的iris和seeds数据集分类 - My New Hugo Site">
+    <meta property="og:type" content="article">
+        
+        
+    <meta name="Keywords" content="">
+    <meta name="description" content="Knn的iris和seeds数据集分类">
+        
+    <meta name="author" content="">
+    <meta property="og:url" content="https://wansonhome.github.io/post/knn%E7%AE%97%E6%B3%95/">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+
+
+    
+    
+</head>
+
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://wansonhome.github.io/">
+                        My New Hugo Site
+                    </a>
+                
+                
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://wansonhome.github.io/">首页</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    <style type="text/css">
+    .post-toc {
+        position: fixed;
+        width: 200px;
+        margin-left: -210px;
+        padding: 5px 10px;
+        font-family: Athelas, STHeiti, Microsoft Yahei, serif;
+        font-size: 12px;
+        border: 1px solid rgba(0, 0, 0, .07);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.98);
+        background-clip: padding-box;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        word-wrap: break-word;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+        cursor: pointer;
+        max-height: 70%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .post-toc .post-toc-title {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .post-toc .post-toc-content {
+        font-size: 15px;
+    }
+
+    .post-toc .post-toc-content>nav>ul {
+        margin: 10px 0;
+    }
+
+    .post-toc .post-toc-content ul {
+        padding-left: 20px;
+        list-style: square;
+        margin: 0.5em;
+        line-height: 1.8em;
+    }
+
+    .post-toc .post-toc-content ul ul {
+        padding-left: 15px;
+        display: none;
+    }
+
+    @media print,
+    screen and (max-width:1057px) {
+        .post-toc {
+            display: none;
+        }
+    }
+</style>
+<div class="post-toc" style="position: absolute; top: 188px;">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#knn概述">knn概述</a></li>
+    <li><a href="#流程">流程</a>
+      <ul>
+        <li><a href="#优缺点">优缺点</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#iris">Iris</a>
+      <ul>
+        <li><a href="#数据集介绍">数据集介绍</a></li>
+      </ul>
+    </li>
+    <li><a href="#seeds">Seeds</a>
+      <ul>
+        <li><a href="#数据集介绍-1">数据集介绍</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#iris数据预处理">Iris数据预处理</a></li>
+    <li><a href="#knn实现部分">knn实现部分</a></li>
+    <li><a href="#可视化部分">可视化部分</a></li>
+    <li><a href="#仿真结果">仿真结果</a></li>
+    <li><a href="#seeds预处理">Seeds预处理</a></li>
+    <li><a href="#实现和可视化部分">实现和可视化部分</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var postToc = $(".post-toc");
+        if (postToc.length) {
+            var leftPos = $("#main").offset().left;
+            if(leftPos<220){
+                postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})
+            }
+
+            var t = postToc.offset().top - 20,
+                a = {
+                    start: {
+                        position: "absolute",
+                        top: t
+                    },
+                    process: {
+                        position: "fixed",
+                        top: 20
+                    },
+                };
+            $(window).scroll(function () {
+                var e = $(window).scrollTop();
+                e < t ? postToc.css(a.start) : postToc.css(a.process)
+            })
+        }
+    })
+</script>
+    <article class="post">
+        <header>
+            <h1 class="post-title">Knn的iris和seeds数据集分类</h1>
+        </header>
+        <date class="post-meta meta-date">
+            1年1月1日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='https://wansonhome.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0'>机器学习</a></span>
+            
+        </div>
+        
+        
+        
+        <div class="clear" style="display: none">
+            <div class="toc-article">
+                <div class="toc-title">文章目录</div>
+            </div>
+        </div>
+        
+        <div class="post-content">
+            <h1 id="knn">knn</h1>
+<h2 id="knn概述">knn概述</h2>
+<p>Knn(k-NearestNeighbor)是一个分类算法，在机器学习中属于相对基础的方法之一。实现的核心思想，用人话来解释：</p>
+<blockquote>
+<p>物以类聚，样本周围谁最多，它就是谁</p>
+</blockquote>
+<p>具体解释为，在一个样本空间中的前k的距离最近的邻居，通常属于同一个类别，并具有这个类别上的特性。核心是根据其周围样本来进行分类判断，适合于类域交叉重叠较多的样本。</p>
+<h2 id="流程">流程</h2>
+<ol>
+<li>预处理数据</li>
+<li>划分测试样本和训练样本，比如三七分</li>
+<li>维护一个大小为k的距离优先级队列，取测试样本计算它与训练样本的欧式距离或曼哈顿距离。</li>
+<li>得出排名前k的点</li>
+<li>投票确定分类</li>
+</ol>
+<h3 id="优缺点">优缺点</h3>
+<p>简单好理解，适合于类域交叉重叠较多的样本。</p>
+<p>计算量大，投票过程慢</p>
+<h1 id="数据集">数据集</h1>
+<table>
+<thead>
+<tr>
+<th>数据集名称</th>
+<th>样本数量</th>
+<th>属性数量(维度)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Iris</td>
+<td>150</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Seeds</td>
+<td>210</td>
+<td>7</td>
+</tr>
+</tbody>
+</table>
+<h2 id="iris">Iris</h2>
+<h3 id="数据集介绍">数据集介绍</h3>
+<p>Iris数据集是常用的分类实验数据集，由Fisher, 1936收集整理。Iris也称鸢尾花卉数据集，是一类多重变量分析的数据集。数据集包含150个数据样本，分为3类，每类50个数据，每个数据包含4个属性。可通过花萼长度，花萼宽度，花瓣长度，花瓣宽度4个属性预测鸢尾花卉属于（Setosa，Versicolour，Virginica）三个种类中的哪一类。</p>
+<h2 id="seeds">Seeds</h2>
+<h3 id="数据集介绍-1">数据集介绍</h3>
+<p>共210个观察值，7个输入变量，一个输出变量
+区域，周长，压实度，籽粒长度，籽粒宽度，不对称系数，籽粒腹沟长度</p>
+<h1 id="实现部分">实现部分</h1>
+<h2 id="iris数据预处理">Iris数据预处理</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> sklearn.datasets <span style="color:#f92672">import</span> load_iris
+<span style="color:#75715e">#从sklearn导入iris数据</span>
+
+iris<span style="color:#f92672">=</span>load_iris()<span style="color:#75715e">#加载iris信息</span>
+data<span style="color:#f92672">=</span>iris<span style="color:#f92672">.</span>data<span style="color:#75715e">#iris的数据集</span>
+target<span style="color:#f92672">=</span>iris<span style="color:#f92672">.</span>target<span style="color:#75715e">#iris的种类</span>
+
+<span style="color:#75715e">#数据部分</span>
+[[<span style="color:#ae81ff">5.1</span> <span style="color:#ae81ff">3.5</span> <span style="color:#ae81ff">1.4</span> <span style="color:#ae81ff">0.2</span>]
+ [<span style="color:#ae81ff">4.9</span> <span style="color:#ae81ff">3.</span>  <span style="color:#ae81ff">1.4</span> <span style="color:#ae81ff">0.2</span>]
+ [<span style="color:#ae81ff">4.7</span> <span style="color:#ae81ff">3.2</span> <span style="color:#ae81ff">1.3</span> <span style="color:#ae81ff">0.2</span>]
+ [<span style="color:#ae81ff">4.6</span> <span style="color:#ae81ff">3.1</span> <span style="color:#ae81ff">1.5</span> <span style="color:#ae81ff">0.2</span>]
+<span style="color:#f92672">...</span>
+ [<span style="color:#ae81ff">6.7</span> <span style="color:#ae81ff">3.</span>  <span style="color:#ae81ff">5.2</span> <span style="color:#ae81ff">2.3</span>]
+ [<span style="color:#ae81ff">6.3</span> <span style="color:#ae81ff">2.5</span> <span style="color:#ae81ff">5.</span>  <span style="color:#ae81ff">1.9</span>]
+ [<span style="color:#ae81ff">6.5</span> <span style="color:#ae81ff">3.</span>  <span style="color:#ae81ff">5.2</span> <span style="color:#ae81ff">2.</span> ]
+ [<span style="color:#ae81ff">6.2</span> <span style="color:#ae81ff">3.4</span> <span style="color:#ae81ff">5.4</span> <span style="color:#ae81ff">2.3</span>]
+ [<span style="color:#ae81ff">5.9</span> <span style="color:#ae81ff">3.</span>  <span style="color:#ae81ff">5.1</span> <span style="color:#ae81ff">1.8</span>]]
+
+shape <span style="color:#f92672">==</span> (<span style="color:#ae81ff">150</span>, <span style="color:#ae81ff">4</span>)
+</code></pre></div><p>这里使用sklearn包中，处理好处理好的numpy类型数据集</p>
+<h2 id="knn实现部分">knn实现部分</h2>
+<p>导入必要的包</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> pylab <span style="color:#f92672">as</span> plt
+<span style="color:#f92672">from</span> sklearn.datasets <span style="color:#f92672">import</span> load_iris 
+<span style="color:#f92672">from</span> sklearn.model_selection <span style="color:#f92672">import</span> train_test_split <span style="color:#75715e">#引入train_test_split函数</span>
+<span style="color:#f92672">from</span> sklearn.neighbors <span style="color:#f92672">import</span> KNeighborsClassifier   <span style="color:#75715e">#引入KNN分类器</span>
+</code></pre></div><p>采用<em>sklearn</em>方法中的knn分类器，使用<em>train_test_split</em>方法对数据集七三分，进行训练和测试。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#使用train_test_split（）函数将数据集分成用于训练的data和用于测试的data</span>
+data_train,data_test,target_train,target_test<span style="color:#f92672">=</span>train_test_split(data,target,test_size<span style="color:#f92672">=</span><span style="color:#ae81ff">0.3</span>,random_state<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+
+<span style="color:#75715e">#调用knn分类器</span>
+knn<span style="color:#f92672">=</span>KNeighborsClassifier()
+<span style="color:#75715e">#训练knn分类器</span>
+knn<span style="color:#f92672">.</span>fit(data_train,target_train)<span style="color:#75715e">#调用该对象的打分方法，计算出准确率</span>
+accurate_Knn<span style="color:#f92672">=</span>knn<span style="color:#f92672">.</span>score(data_test,target_test,sample_weight<span style="color:#f92672">=</span>None)
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;KNN预测值：&#39;</span>,knn<span style="color:#f92672">.</span>predict(data_test))<span style="color:#75715e">#预测值</span>
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;真实值：&#39;</span>,target_test)<span style="color:#75715e">#真实值</span>
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;KNN输出训练集的准确率为：&#39;</span>,accurate_Knn)
+</code></pre></div><h2 id="可视化部分">可视化部分</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(target_test)):<span style="color:#75715e">#因为数据是二维数组，所以要用for循环，也可以用reshape对二位数组进行变形</span>
+    <span style="color:#66d9ef">if</span> target_test[i]<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span>:
+        plt<span style="color:#f92672">.</span>scatter(data_test[i,<span style="color:#ae81ff">0</span>],data_test[i,<span style="color:#ae81ff">1</span>],c<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;r&#39;</span>)<span style="color:#75715e">#画散点图</span>
+    <span style="color:#66d9ef">elif</span> target_test[i]<span style="color:#f92672">==</span><span style="color:#ae81ff">1</span>:
+        plt<span style="color:#f92672">.</span>scatter(data_test[i,<span style="color:#ae81ff">0</span>],data_test[i,<span style="color:#ae81ff">1</span>],c<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;g&#39;</span>)
+    <span style="color:#66d9ef">else</span>:
+        plt<span style="color:#f92672">.</span>scatter(data_test[i,<span style="color:#ae81ff">0</span>],data_test[i,<span style="color:#ae81ff">1</span>],c<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;b&#39;</span>)
+plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;iris&#34;</span>)
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#39;sepal length&#39;</span>) 
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#39;sepal width&#39;</span>) 
+plt<span style="color:#f92672">.</span>show()
+
+pr<span style="color:#f92672">=</span>knn<span style="color:#f92672">.</span>predict(data_test)
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(pr)):
+    <span style="color:#66d9ef">if</span> pr[i]<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span>:
+        plt<span style="color:#f92672">.</span>scatter(data_test[i,<span style="color:#ae81ff">0</span>],data_test[i,<span style="color:#ae81ff">1</span>],c<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;r&#39;</span>)
+    <span style="color:#66d9ef">elif</span> pr[i]<span style="color:#f92672">==</span><span style="color:#ae81ff">1</span>:
+        plt<span style="color:#f92672">.</span>scatter(data_test[i,<span style="color:#ae81ff">0</span>],data_test[i,<span style="color:#ae81ff">1</span>],c<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;g&#39;</span>)
+    <span style="color:#66d9ef">else</span>:
+        plt<span style="color:#f92672">.</span>scatter(data_test[i,<span style="color:#ae81ff">0</span>],data_test[i,<span style="color:#ae81ff">1</span>],c<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;b&#39;</span>)
+plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;iris-KNN&#34;</span>)
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#39;sepal length&#39;</span>) 
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#39;sepal width&#39;</span>) 
+plt<span style="color:#f92672">.</span>show()
+
+</code></pre></div><h2 id="仿真结果">仿真结果</h2>
+<p><img src="/images/Knn_01.jpg" alt="image"></p>
+<h2 id="seeds预处理">Seeds预处理</h2>
+<p>Seeds数据从UCI网站进行下载</p>
+<blockquote>
+<p><a href="http://archive.ics.uci.edu/ml/machine-learning-databases/00236/">http://archive.ics.uci.edu/ml/machine-learning-databases/00236/</a></p>
+</blockquote>
+<p>使用<em>pandas</em>的<em>read_csv</em>方法导入csv数据，并使用<em>iloc</em>方法取特征部分和label。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pandas <span style="color:#f92672">import</span> read_csv
+
+seeds<span style="color:#f92672">=</span>read_csv(<span style="color:#e6db74">&#39;seeds.csv&#39;</span>,header<span style="color:#f92672">=</span>None)<span style="color:#75715e">#加载seeds信息</span>
+_data<span style="color:#f92672">=</span>seeds<span style="color:#f92672">.</span>iloc[:,<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">7</span>]<span style="color:#75715e">#seeds的数据集</span>
+sonartarget<span style="color:#f92672">=</span>seeds<span style="color:#f92672">.</span>iloc[:,<span style="color:#ae81ff">7</span>:]<span style="color:#75715e">#seeds的种类</span>
+data<span style="color:#f92672">=</span>_data<span style="color:#f92672">.</span>values
+
+_target<span style="color:#f92672">=</span>sonartarget<span style="color:#f92672">.</span>values
+target<span style="color:#f92672">=</span>_target<span style="color:#f92672">.</span>ravel()
+</code></pre></div><h2 id="实现和可视化部分">实现和可视化部分</h2>
+<p>实现部分原理与上iris基本相同，同样是分为三类数据。直接贴代码</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">knn<span style="color:#f92672">=</span>KNeighborsClassifier()<span style="color:#75715e">#调用knn分类器</span>
+knn<span style="color:#f92672">.</span>fit(data_train,target_train)<span style="color:#75715e">#训练knn分类器</span>
+accurate_Knn<span style="color:#f92672">=</span>knn<span style="color:#f92672">.</span>score(data_test,target_test,sample_weight<span style="color:#f92672">=</span>None)<span style="color:#75715e">#调用该对象的打分方法，计算出准确率</span>
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;KNN预测值：&#39;</span>,knn<span style="color:#f92672">.</span>predict(data_test))<span style="color:#75715e">#预测值</span>
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;真实值：&#39;</span>,target_test)<span style="color:#75715e">#真实值</span>
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;KNN输出训练集的准确率为：&#39;</span>,accurate_Knn)
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(target_test)):<span style="color:#75715e">#因为数据是二维数组，所以要用for循环，也可以用reshape对二位数组进行变形</span>
+    <span style="color:#66d9ef">if</span> target_test[i]<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span>:
+        plt<span style="color:#f92672">.</span>scatter(data_test[i,<span style="color:#ae81ff">0</span>],data_test[i,<span style="color:#ae81ff">1</span>],c<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;r&#39;</span>)<span style="color:#75715e">#画散点图</span>
+    <span style="color:#66d9ef">elif</span> target_test[i]<span style="color:#f92672">==</span><span style="color:#ae81ff">1</span>:
+        plt<span style="color:#f92672">.</span>scatter(data_test[i,<span style="color:#ae81ff">0</span>],data_test[i,<span style="color:#ae81ff">1</span>],c<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;g&#39;</span>)
+    <span style="color:#66d9ef">else</span>:
+        plt<span style="color:#f92672">.</span>scatter(data_test[i,<span style="color:#ae81ff">0</span>],data_test[i,<span style="color:#ae81ff">1</span>],c<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;b&#39;</span>)
+plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;seeds&#34;</span>)
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#39;sepal length&#39;</span>) 
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#39;sepal width&#39;</span>) 
+plt<span style="color:#f92672">.</span>show()
+
+
+pr<span style="color:#f92672">=</span>knn<span style="color:#f92672">.</span>predict(data_test)
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(pr)):
+    <span style="color:#66d9ef">if</span> pr[i]<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span>:
+        plt<span style="color:#f92672">.</span>scatter(data_test[i,<span style="color:#ae81ff">0</span>],data_test[i,<span style="color:#ae81ff">1</span>],c<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;r&#39;</span>)
+    <span style="color:#66d9ef">elif</span> pr[i]<span style="color:#f92672">==</span><span style="color:#ae81ff">1</span>:
+        plt<span style="color:#f92672">.</span>scatter(data_test[i,<span style="color:#ae81ff">0</span>],data_test[i,<span style="color:#ae81ff">1</span>],c<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;g&#39;</span>)
+    <span style="color:#66d9ef">else</span>:
+        plt<span style="color:#f92672">.</span>scatter(data_test[i,<span style="color:#ae81ff">0</span>],data_test[i,<span style="color:#ae81ff">1</span>],c<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;b&#39;</span>)
+plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;seeds-KNN&#34;</span>)
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#39;sepal length&#39;</span>) 
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#39;sepal width&#39;</span>) 
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><p>##仿真结果</p>
+<p><img src="/images/Knn_02.jpg" alt="image"></p>
+
+        </div>
+
+        
+
+
+        
+
+
+        <div class="post-meta meta-tags">
+            
+            <ul class="clearfix">
+                
+                <li><a href='https://wansonhome.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0'>机器学习</a></li>
+                
+            </ul>
+            
+        </div>
+    </article>
+    
+    
+
+    
+    
+</div>
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='//www.google.com/search' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://wansonhome.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://wansonhome.github.io/post/knn%E7%AE%97%E6%B3%95/" title="Knn的iris和seeds数据集分类">Knn的iris和seeds数据集分类</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">分类</h3>
+<ul class="widget-list">
+    
+    <li><a href="https://wansonhome.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习 (1)</a></li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title">标签</h3>
+<div class="tagcloud">
+    
+    <a href="https://wansonhome.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+    
+</div>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://wansonhome.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+    <footer id="footer">
+    <div class="container">
+        &copy; 2020 <a href="https://wansonhome.github.io/">My New Hugo Site By </a>.
+        Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
+        <a href="https://www.flysnow.org/" target="_blank">Theme</a> based on <a href="https://github.com/flysnow-org/maupassant-hugo" target="_blank">maupassant</a>.
+        
+    </div>
+</footer>
+
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+
+
+
+</body>
+
+</html>
