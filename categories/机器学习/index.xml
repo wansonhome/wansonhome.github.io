@@ -6,6 +6,7 @@
     <description>Recent content in 机器学习 on wansonhome</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
+    <lastBuildDate>Fri, 13 Dec 2019 21:00:00 +0800</lastBuildDate>
     
 	<atom:link href="https://wansonhome.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/index.xml" rel="self" type="application/rss+xml" />
     
@@ -13,7 +14,7 @@
     <item>
       <title>Knn的iris、seeds数据集分类</title>
       <link>https://wansonhome.github.io/post/2020-6-9-Knn%E7%9A%84iris%E5%92%8Cseeds%E6%95%B0%E6%8D%AE%E9%9B%86%E5%88%86%E7%B1%BB/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 13 Dec 2019 21:00:00 +0800</pubDate>
       
       <guid>https://wansonhome.github.io/post/2020-6-9-Knn%E7%9A%84iris%E5%92%8Cseeds%E6%95%B0%E6%8D%AE%E9%9B%86%E5%88%86%E7%B1%BB/</guid>
       <description>knn knn概述 Knn(k-NearestNeighbor)是一个分类算法，在机器学习中属于相对基础的方法之一。实现的核心思想，用人话来解释： 物以类聚，样本周围谁最多，它就是谁 具体解释为，在一个样本空间中的前k的距离最近的邻居，通常属于同一个类别，并具有这个类别上的特性。核心是根据其</description>
