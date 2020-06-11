@@ -17,7 +17,7 @@
       <pubDate>Fri, 13 Dec 2019 21:00:00 +0800</pubDate>
       
       <guid>https://wansonhome.github.io/post/Knn%E7%AE%97%E6%B3%95/</guid>
-      <description>knn knn概述 Knn(k-NearestNeighbor)是一个分类算法，在机器学习中属于相对基础的方法之一。实现的核心思想，用人话来解释： 物以类聚，样本周围谁最多，它就是谁 具体解释为，在一个样本空间中的前k的距离最近的邻居，通常属于同一个类别，并具有这个类别上的特性。核心是根据其</description>
+      <description>knn knn概述</description>
     </item>
     
   </channel>
