@@ -6,24 +6,14 @@
     <description>Recent content in Categories on wansonhome</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 18 Dec 2019 21:55:00 +0800</lastBuildDate>
     
 	<atom:link href="https://wansonhome.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Golang</title>
-      <link>https://wansonhome.github.io/categories/Golang/</link>
-      <pubDate>Wed, 18 Dec 2019 21:55:00 +0800</pubDate>
-      
-      <guid>https://wansonhome.github.io/categories/Golang/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>机器学习</title>
       <link>https://wansonhome.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</link>
-      <pubDate>Fri, 13 Dec 2019 21:00:00 +0800</pubDate>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://wansonhome.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</guid>
       <description></description>
