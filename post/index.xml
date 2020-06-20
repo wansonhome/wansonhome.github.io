@@ -6,9 +6,19 @@
     <description>Recent content in Posts on wansonhome</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
+    <lastBuildDate>Sat, 20 Jun 2020 22:38:31 +0800</lastBuildDate>
     
 	<atom:link href="https://wansonhome.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Knne</title>
+      <link>https://wansonhome.github.io/post/knne/</link>
+      <pubDate>Sat, 20 Jun 2020 22:38:31 +0800</pubDate>
+      
+      <guid>https://wansonhome.github.io/post/knne/</guid>
+      <description>+++ title=&amp;quot;Knn的iris和seeds数据集分类&amp;rdquo; tags=[&amp;ldquo;机器学习&amp;rdquo;] categories=[&amp;ldquo;机器学习&amp;rdquo;] date=&amp;quot;2020-6-19&amp;rdquo; toc=true +++ knn knn概述 Knn(k-NearestNeighbor)是一个分类算法，在机器学习中</description>
+    </item>
     
     <item>
       <title>Knn的iris和seeds数据集分类</title>
